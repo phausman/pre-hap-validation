@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Exec=sudo gnome-terminal -- bash --rcfile /opt/defaults.bashrc -ci "/opt/pre-hap-validation.py && bash"
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en]=Pre-HAP Validation
+Name=Pre-HAP Validation
+Comment[en]=
+Comment=
+Path=/opt
+Icon=utilities-system-monitor

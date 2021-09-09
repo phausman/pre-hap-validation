@@ -1,0 +1,5 @@
+extract-cd/
+mnt/
+squashfs-root/
+*.iso
+.*.sh

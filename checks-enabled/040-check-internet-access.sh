@@ -1,0 +1,1 @@
+../checks-available/mandatory/040-check-internet-access.sh

@@ -64,7 +64,7 @@ declare -p default_dns_nameservers default_domains > .$(basename $0)
 # Configure DNS nameservers for the default interface
 interface=$(ip route | grep default | awk '{print $5}')
 printf -v set_dns_option ' --set-dns %s' ${dns_nameservers}
-echo -n "Configuring DNS Nameserver ${dns_nameserver} for" \
+echo -n "Configuring DNS Nameservers ${dns_nameservers} for" \
     "interface ${interface}... "
 if systemd-resolve ${set_dns_option} --interface ${interface} &> /dev/null
 then 

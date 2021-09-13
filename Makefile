@@ -1,5 +1,5 @@
 .PHONY: all
-all: squashfs customize iso
+all: squashfs customize install-packages iso
 
 ubuntu-desktop.iso:
 	@printf "\nDownloading ISO...\n"
@@ -28,6 +28,38 @@ customize:
 	sudo cp defaults.bashrc squashfs-root/opt
 	sudo cp pre-hap-validation-launcher.desktop squashfs-root/etc/xdg/autostart/
 
+# Install additional packages, e.g. freeipmi-tools and purge unnecessary packages
+# to shring down the resulting ISO
+install-packages:
+	cd squashfs-root && sudo mount -o bind /proc ./proc
+	cd squashfs-root && sudo mount -o bind /dev ./dev
+	cd squashfs-root && sudo mount -o bind /dev/pts ./dev/pts
+	cd squashfs-root && sudo mount -o bind /run ./run
+	cd squashfs-root && sudo mount -o bind /sys ./sys
+	
+	sudo chroot squashfs-root apt update
+	sudo chroot squashfs-root apt install --yes freeipmi-tools
+	sudo chroot squashfs-root apt purge --yes thunderbird libreoffice-common \
+	    libreoffice-core fonts-noto-cjk tegaki-zinnia-japanese aisleriot brltty \
+		duplicity example-content gnome-accessibility-themes gnome-mahjongg \
+		gnome-mines gnome-sudoku gnome-video-effects landscape-common \
+		libreoffice-avmedia-backend-gstreamer libreoffice-base-core libreoffice-calc \
+		libreoffice-common libreoffice-core libreoffice-draw libreoffice-gnome \
+		libreoffice-impress libreoffice-math libreoffice-ogltrans \
+		libreoffice-pdfimport libreoffice-style-galaxy libreoffice-writer libsane1 \
+		libsane-common python3-uno rhythmbox rhythmbox-plugins sane-utils shotwell \
+		shotwell-common totem totem-common totem-plugins printer-driver-brlaser \
+		printer-driver-foo2zjs printer-driver-foo2zjs-common printer-driver-m2300w \
+		printer-driver-ptouch printer-driver-splix
+	sudo chroot squashfs-root apt autoremove --yes
+	sudo chroot squashfs-root apt clean
+	
+	cd squashfs-root && sudo umount ./proc
+	cd squashfs-root && sudo umount ./sys
+	cd squashfs-root && sudo umount ./dev/pts
+	cd squashfs-root && sudo umount ./dev
+	cd squashfs-root && sudo umount ./run
+
 # Create customized ISO image
 iso:
 	@printf "\nConfiguring sudoers...\n"
@@ -39,6 +71,11 @@ iso:
 	sudo rm --force extract-cd/casper/filesystem.size
 	sudo rm --force extract-cd/md5sum.txt
 	sudo mksquashfs squashfs-root extract-cd/casper/filesystem.squashfs -comp xz -e squashfs-root/boot
+
+	@printf "\nPopulating filesystem.manifest...\n"
+	sudo chmod +w extract-cd/casper/filesystem.manifest
+	sudo chroot squashfs-root dpkg-query -W --showformat='${Package} ${Version}\n' \
+	    | sudo tee extract-cd/casper/filesystem.manifest
 
 	@printf "\nPopulating filesystem.size...\n"
 	printf $(sudo du -sx --block-size=1 squashfs-root | cut -f1) | sudo tee extract-cd/casper/filesystem.size

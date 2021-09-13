@@ -1,0 +1,1 @@
+../checks-available/optional/060-check-ping-public-api-network-gateway.sh

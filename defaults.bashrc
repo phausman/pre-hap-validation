@@ -34,3 +34,20 @@ export default_domains="archive.ubuntu.com"
 # Space separated list of BMC IPs that should be used for testing
 # for IPMI access.
 export default_bmcs="192.168.22.22"
+
+
+#
+# 060-check-ping-public-api-network-gateway.sh
+#
+
+# IP address of the OpenStack Public API network gateway
+export default_os_api_gateway="192.168.20.1"
+
+
+
+#
+# 061-check-ping-provider-network-gateway.sh
+#
+
+# Space separated list of IP addresses of the provider networks gateways
+export default_provider_gateways="172.27.1.1 172.27.2.1"

@@ -1,0 +1,1 @@
+../checks-available/optional/061-check-ping-provider-network-gateway.sh

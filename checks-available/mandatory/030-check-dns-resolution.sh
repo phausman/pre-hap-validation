@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# This check validates access to provided DNS nameservers.
+#
+# Defaults:
+# default_dns_nameservers
+#   Space separated list of DNS nameservers, e.g. '192.168.10.10 192.168.10.11'.
+
 # Color definitions
 GREEN='\033[0;32m'
 RED='\e[31m'

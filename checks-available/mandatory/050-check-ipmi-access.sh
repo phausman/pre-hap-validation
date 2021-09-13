@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# This check validates access to the BMC controllers of the cloud nodes.
+# It tries to run ipmi-ping against specified IP addresses.
+#
+# Defaults:
+# default_bmcs
+#   Space separated list of IP addresses of the BMC controllers of the cloud nodes, 
+#   e.g. '192.168.1.10 192.168.1.11'.
+
 # Color definitions
 GREEN='\033[0;32m'
 RED='\e[31m'

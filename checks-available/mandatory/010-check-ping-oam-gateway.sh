@@ -1,5 +1,18 @@
 #!/bin/bash
 
+# This check configures static IP address on a given NIC and a default gateway. 
+# It tries to ping the gateway. Fails if the gateway is not accessible.
+#
+# Defaults:
+# default_device
+#   Network device to be configured with IP address from OAM network, e.g. eno1.
+# default_subnet
+#   Subnet for the OAM network, in CIDR format, e.g. 192.168.0.0/24.
+# default_gateway
+#   IP address of the default gateway for the OAM network, e.g. 192.168.0.1.
+# default_ip
+#   Static IP address for this machine, e.g. 192.168.0.11.
+
 # Color definitions
 GREEN='\033[0;32m'
 RED='\e[31m'

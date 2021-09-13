@@ -1,3 +1,4 @@
 #!/bin/bash
 
-exit 0
+# Not implemented yet
+exit 1

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# This check validates access to public Canonical package repositories and third 
+# party resources, such as archive.ubuntu.com, cloud-images.ubuntu.com, jaas.ai, etc.
+
 # Based on check_sources.sh script by @msmarcal
 # https://github.com/msmarcal/check_sources/blob/master/check_sources.sh
 

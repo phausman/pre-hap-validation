@@ -29,7 +29,7 @@ customize:
 	sudo cp pre-hap-validation-launcher.desktop squashfs-root/etc/xdg/autostart/
 
 # Install additional packages, e.g. freeipmi-tools and purge unnecessary packages
-# to shring down the resulting ISO
+# to shrink down the resulting ISO
 install-packages:
 	cd squashfs-root && sudo mount -o bind /proc ./proc
 	cd squashfs-root && sudo mount -o bind /dev ./dev

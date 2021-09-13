@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# TODO: replace the current method of checking the IPMI access (using netcat) 
-#       with something more robust, like ipmi-ping. For the ipmi-ping though, 
-#       the ISO image would need to have freeipmi-tools installed. Since the
-#       initial implementation of this tooling does not install any additional
-#       packages into an ISO image, using ipmi-ping is not possible.
-
 # Color definitions
 GREEN='\033[0;32m'
 RED='\e[31m'
@@ -27,7 +21,7 @@ if [ -f ".$(basename $0)" ]; then
 fi
 
 echo "This check validates access to the BMC controllers of the cloud nodes." \
-     "It tries to connect to 623 port of the given machines."
+     "It tries to run ipmi-ping against specified IP addresses."
 
 echo ""
 echo "Step 1 of 1: Enter one or more IP addresses of the BMC controllers of the" \
@@ -55,8 +49,8 @@ echo ""
 failed="false"
 for bmc in ${bmcs}
 do
-    echo -n "Checking access to ${bmc}:623 ... "
-    if nc -vz -w 3 ${bmc} 623 &> /dev/null 
+    echo -n "Checking access to ${bmc} ... "
+    if ipmi-ping -c 3 ${bmc} &> /dev/null 
     then
         echo_ok "OK"
     else
@@ -75,10 +69,10 @@ then
 else
     echo -n "Test result: "
     echo_error "Failed"
-    echo "Description: Checking access BMC(s) failed." \
+    echo "Description: Checking access to BMC(s) failed." \
          "Possible reasons for this failure may include:"
     echo "- IPMI over LAN not enabled on the cloud nodes,"
     echo "- Out of Band (OOB) network could not be reached via default gateway,"
-    echo "- firewall does not allow such traffic."
+    echo "- firewall does not allow IPMI over LAN traffic (UDP, port 623)."
     exit 1
 fi

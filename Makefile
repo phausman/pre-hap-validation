@@ -39,18 +39,7 @@ install-packages:
 	
 	sudo chroot squashfs-root apt update
 	sudo chroot squashfs-root apt install --yes freeipmi-tools
-	sudo chroot squashfs-root apt purge --yes thunderbird libreoffice-common \
-	    libreoffice-core fonts-noto-cjk tegaki-zinnia-japanese aisleriot brltty \
-		duplicity example-content gnome-accessibility-themes gnome-mahjongg \
-		gnome-mines gnome-sudoku gnome-video-effects landscape-common \
-		libreoffice-avmedia-backend-gstreamer libreoffice-base-core libreoffice-calc \
-		libreoffice-common libreoffice-core libreoffice-draw libreoffice-gnome \
-		libreoffice-impress libreoffice-math libreoffice-ogltrans \
-		libreoffice-pdfimport libreoffice-style-galaxy libreoffice-writer libsane1 \
-		libsane-common python3-uno rhythmbox rhythmbox-plugins sane-utils shotwell \
-		shotwell-common totem totem-common totem-plugins printer-driver-brlaser \
-		printer-driver-foo2zjs printer-driver-foo2zjs-common printer-driver-m2300w \
-		printer-driver-ptouch printer-driver-splix
+	cat bionic-removed-packages.txt | xargs sudo chroot squashfs-root apt purge --yes
 	sudo chroot squashfs-root apt autoremove --yes
 	sudo chroot squashfs-root apt clean
 	

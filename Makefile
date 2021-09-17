@@ -3,7 +3,7 @@ all: squashfs customize install-packages iso
 
 ubuntu-desktop.iso:
 	@printf "\nDownloading ISO...\n"
-	wget -O ubuntu-desktop.iso https://releases.ubuntu.com/18.04/ubuntu-18.04.5-desktop-amd64.iso
+	wget -O ubuntu-desktop.iso https://old-releases.ubuntu.com/releases/bionic/ubuntu-18.04.5-desktop-amd64.iso
 
 squashfs: ubuntu-desktop.iso
 	@printf "\nMounting ISO...\n"
